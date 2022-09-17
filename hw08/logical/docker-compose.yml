@@ -1,0 +1,33 @@
+version: "2"
+services:
+  postgresql_master:
+    image: postgres:14
+    container_name: postgresql_master
+    restart: always
+    volumes:
+      - ./data/postgresql_master:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: "password42"
+    networks:
+      docker:
+        ipv4_address: 10.5.0.5
+
+  postgresql_replica:
+    image: postgres:14
+    container_name: postgresql_replica
+    restart: always
+    volumes:
+      - ./data/postgresql_replica:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: "password42"
+    networks:
+      docker:
+        ipv4_address: 10.5.0.6
+
+networks:
+  docker:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
