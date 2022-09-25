@@ -3,8 +3,12 @@ version: '3.1'
 services:
   otusdb:
     image: mysql:8.0.15
+    container_name: otusdb
     environment:
       - MYSQL_ROOT_PASSWORD=12345
+      - MYSQL_DATABASE=otus
+      - MYSQL_USER=db_user
+      - MYSQL_PASSWORD=db_user_pass
     command: 
       --init-file /init.sql
     volumes:
@@ -16,6 +20,19 @@ services:
       - "3306"
     ports:
       - "3309:3306"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    links:
+      - otusdb
+    environment:
+      PMA_HOST: otusdb
+      PMA_PORT: 3309
+      PMA_ARBITRARY: 1
+      UPLOAD_LIMIT: 300M
+    ports:
+      - 8081:80
 
 volumes:
   data:

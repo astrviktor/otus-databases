@@ -1,0 +1,38 @@
+## Выполнение домашнего задания
+
+Подготовка - для написания запросов нужно загрузить в MySQL тестовую базу с данными AdventureWorks
+
+В репозитории https://github.com/tapsey/AdventureWorksMYSQL есть файл для импорта через phpMyAdmin, загрузил через него
+
+#### 1. К списку продуктов добавить максимальную и минимальную цену и кол-во предложений
+
+```
+SELECT
+    ProductID,
+    MAX(StandardPrice) as MaxPrice,
+    MIN(StandardPrice) as MinPrice,
+    COUNT(ProductID) as CountProduct
+FROM productvendor
+GROUP BY ProductID WITH ROLLUP;
+```
+
+#### 2. Сделать выборку, показывающую самый дорогой и самый дешевый товар в каждой категории
+
+```
+SELECT
+    ProductSubcategoryID,
+    MAX(ListPrice) as MaxPrice,
+    MIN(ListPrice) as MinPrice
+FROM product
+GROUP BY ProductSubcategoryID;
+```
+
+#### 3. Сделать rollup с количеством товаров по категориям
+
+```
+SELECT
+    ProductSubcategoryID,
+    COUNT(ProductID) as CountProduct
+FROM product
+GROUP BY ProductSubcategoryID WITH ROLLUP;
+```
