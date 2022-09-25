@@ -11,6 +11,7 @@ services:
       - data:/var/lib/mysql
       - ./init.sql:/init.sql
       - ./custom.conf:/etc/mysql/conf.d
+      - /home/astrviktor/otus-databases/hw12/CSVs:/home/root
     expose:
       - "3306"
     ports:
